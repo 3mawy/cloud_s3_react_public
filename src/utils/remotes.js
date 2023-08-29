@@ -1,6 +1,6 @@
 import Storage from "./Storage.js";
 
-const apiUrl = 'http://localhost:8004/api'
+const apiUrl = 'https://3mawy.com/api'
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${Storage.getAccessToken()}`,
