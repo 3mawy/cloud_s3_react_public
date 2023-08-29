@@ -3,13 +3,13 @@ import {useGlobalState} from "../../context/GlobalStateContext.jsx";
 import BucketsLoader from "../Loaders/BucketsLoader.jsx";
 import {useEffect, useState} from "react";
 import {isPublic} from "../../utils/filterHelpers.js";
-import useBucketDataLoader from "../../hooks/useBucketDataLoader.jsx";
+import useBucketData from "../../hooks/useBucketData.jsx";
 
 const BucketsTable = () => {
-    const {buckets, currentCredentials, setBuckets} = useGlobalState();
+    const {buckets, currentCredentials} = useGlobalState();
     const [filteredBuckets, setFilteredBuckets] = useState([]);
     const [currentFilter, setCurrentFilter] = useState('');
-    const {fetchBuckets} = useBucketDataLoader()
+    const {fetchBuckets} = useBucketData()
 
     const setFiltered = (filteredItems, currentFilter) => {
         setFilteredBuckets(filteredItems)
@@ -61,7 +61,7 @@ const BucketsTable = () => {
         <div
             className="rounded-sm min-h-[40rem] relative border border-stroke bg-white px-5 pt-6 pb-2.5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1 overflow-x-scroll">
             <div className={'sticky left-0'}>
-                <TableHeadingFilters items={buckets} onFilter={setFiltered}/>
+                <TableHeadingFilters items={buckets} onFilter={setFiltered} Buckets={`Buckets`}/>
             </div>
             <table className="w-full table-auto ">
                 <thead>

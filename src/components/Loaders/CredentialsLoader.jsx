@@ -3,17 +3,14 @@ import {useGlobalState} from "../../context/GlobalStateContext.jsx";
 import {useEffect} from "react";
 
 import UseCredentialsData from "../../hooks/useCredentialsData.jsx";
-import Storage from "../../utils/Storage.js";
 
 const CredentialsLoader = ({className}) => {
     const {loadingCredentialsArr, errorCredentialsArr, credentialsArr, currentCredentials} = useGlobalState();
     const {fetchAWSCredentials} = UseCredentialsData();
-
     useEffect(() => {
-        if (Storage.getAccessToken()) {
-            fetchAWSCredentials();
-        }
+        fetchAWSCredentials();
     }, [currentCredentials]);
+
     return (
         <div>
             {loadingCredentialsArr && (
@@ -21,7 +18,7 @@ const CredentialsLoader = ({className}) => {
                     <Loader/>
                 </div>
             )}
-            {(errorCredentialsArr && credentialsArr.length === 0) && <div
+            {(errorCredentialsArr && credentialsArr?.length === 0) && <div
                 className={`${className} text-danger absolute inset-0 flex justify-center text-center place-items-center`}>
                 <p>No Credentials yet</p></div>}
         </div>

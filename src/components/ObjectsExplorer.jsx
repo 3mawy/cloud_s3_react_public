@@ -17,6 +17,7 @@ const ObjectsExplorer = ({folders, files, currentPrefix, handlePrefixChange, nex
     useEffect(() => {
         console.log(nextMarker)
     }, [nextMarker]);
+
     function handleFileClick(file) {
         fetchObjectUrl(file).then(url => setFileUrl(url))
         setIsImage(isFileImage(file))
@@ -61,7 +62,6 @@ const ObjectsExplorer = ({folders, files, currentPrefix, handlePrefixChange, nex
                 ))}
             </div>
             <div className="rounded-md min-w-[50rem]">
-                <h2 className="text-lg font-semibold mb-2">Folders:</h2>
                 <ul className=" mb-4">
                     {folders?.map((folder, index) => (
                         <li key={index} onClick={() => handleFolderClick(folder)}
@@ -71,7 +71,7 @@ const ObjectsExplorer = ({folders, files, currentPrefix, handlePrefixChange, nex
                         </li>
                     ))}
                 </ul>
-                <ul className="">
+                <ul >
                     {files?.map((file, index) => (
                         <li key={file.file} onClick={() => handleFileClick(file.file)}
                             className="text-body dark:text-whiten dark:bg-meta-4 bg-bodydark1 rounded my-1 dark:hover:text-white hover:text-white cursor-pointer flex gap-1.5 text-lg place-items-center ">
@@ -80,15 +80,19 @@ const ObjectsExplorer = ({folders, files, currentPrefix, handlePrefixChange, nex
                             </span>
                             <span className={` justify-between flex w-full `}>
                                 <p className="text-gray-800 truncate">{file.file}</p>
-                                <p className="text-xs text-gray-600">
-                                    Permissions: {file.grants[0].Permission}
-                                </p>
+                                <div className="text-xs text-gray-600 my-auto mr-2">
+                                    {file.grants?.map((grant, idx) => (
+                                        <span key={idx}>{`${grant.Permission} `}</span>
+                                    ))}
+                                </div>
                             </span>
                         </li>
                     ))}
                 </ul>
             </div>
-            {nextMarker !== '' && <div className={'rounded dark:bg-meta-4 bg-bodydark1 mt-2 flex place-items-center gap-3 px-2 hover:text-white cursor-pointer'} onClick={onFetchMore}>
+            {nextMarker !== '' && <div
+                className={'rounded dark:bg-meta-4 bg-bodydark1 mt-2 flex place-items-center gap-3 px-2 hover:text-white cursor-pointer'}
+                onClick={onFetchMore}>
                 <DropdownArrow height={"38"} width={"30"} dropdownOpen={false}/>
                 <span className={'text-xl font-bold '}>Load More</span>
             </div>

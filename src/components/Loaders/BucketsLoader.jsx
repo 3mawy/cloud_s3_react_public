@@ -1,11 +1,11 @@
 import Loader from "./Loader.jsx";
 import {useGlobalState} from "../../context/GlobalStateContext.jsx";
 import {useEffect} from "react";
-import useBucketDataLoader from "../../hooks/useBucketDataLoader.jsx";
+import useBucketData from "../../hooks/useBucketData.jsx";
 
 const BucketsLoader = ({className}) => {
     const {loadingBuckets, errorBuckets, buckets} = useGlobalState();
-    const {fetchBuckets} = useBucketDataLoader();
+    const {fetchBuckets} = useBucketData();
 
     useEffect(() => {
         fetchBuckets();

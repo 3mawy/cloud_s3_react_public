@@ -20,7 +20,6 @@ function App() {
                     <Route path="signup" element={<SignupForm/>}/>
                 </Route>
                 <Route element={<DefaultLayout/>}>
-                    <Route index element={<Dashboard/>}/>
                     {routes.map(({path, component: Component}) => (
                         <Route
                             key={path}

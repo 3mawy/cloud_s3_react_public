@@ -1,7 +1,7 @@
 import {useGlobalState} from "../context/GlobalStateContext.jsx";
 import {useAuthentication} from "./useAuthentication.jsx";
 import {addCredentials, getCredentials} from "../utils/remotes.js";
-import Storage from "../utils/Storage.js";
+
 const UseCredentialsData = () => {
     const {
         setCredentialsArr,
@@ -25,13 +25,10 @@ const UseCredentialsData = () => {
         setErrorCredentialsArr(null);
 
         try {
-            //TODO : refator so it wouldnt make a request until getaccess token is populated
-            if (Storage.getAccessToken()) {
-                const data = await refreshTokenAndRetry(async () => {
-                    return await getCredentials();
-                })
-                setCredentialsArr(data)
-            }
+            const data = await refreshTokenAndRetry(async () => {
+                return getCredentials();
+            })
+            setCredentialsArr(data)
 
         } catch (error) {
             setErrorCredentialsArr(error)

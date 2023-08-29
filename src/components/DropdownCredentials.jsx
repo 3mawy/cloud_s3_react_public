@@ -1,7 +1,7 @@
 import useDropdown from "../hooks/UI/useDropdown.jsx";
 import KeyIcon from "./Icons/KeyIcon.jsx";
 import PlusIcon from "./Icons/PlusIcon.jsx";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import Modal from "./Modal.jsx";
 import {useGlobalState} from "../context/GlobalStateContext.jsx";
 import {useNavigate} from "react-router-dom";
@@ -14,6 +14,9 @@ const DropdownCredentials = () => {
     const {setCurrentCredentials, credentialsArr} = useGlobalState()
     const navigate = useNavigate();
 
+    useEffect(() => {
+        console.log(credentialsArr)
+    }, [credentialsArr]);
 
     const handleCredChange = (credentialIdentifier) => {
         setDropdownOpen(false)
@@ -21,7 +24,7 @@ const DropdownCredentials = () => {
         navigate('/')
     }
 
-    return (
+    return credentialsArr && (
         <li className="relative">
 
             <a

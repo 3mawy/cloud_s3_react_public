@@ -25,11 +25,11 @@ const AddCredentialsForm = ({onClose}) => {
     };
     return (
         <>
-            <p className="mb-9 font-bold text-black dark:text-white text-title-md">
+            <p className="mb-9 font-bold text-black dark:text-white text-title-md ">
                 Add New Credentials
             </p>
 
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit } className={`w-full`}>
                 <div className="mb-4">
                     <label className="mb-2.5 block font-medium text-black dark:text-white">
                         Credentials Identifier
@@ -88,6 +88,9 @@ const AddCredentialsForm = ({onClose}) => {
                     />
                     {errors.region_name && (
                         <p className="text-danger mt-1">{errors.region_name}</p>
+                    )}
+                    {errors.error && (
+                        <p className="text-danger mt-1">{errors.error}</p>
                     )}
                 </div>
                 <button

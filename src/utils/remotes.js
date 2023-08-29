@@ -26,12 +26,12 @@ export const addCredentials = async (identifier, awsAccessKeyId, awsSecretAccess
 }
 export const getCredentials = async () => {
     try {
-        const response = await fetch(`${apiUrl}/aws-credentials/`, {
-            method: 'GET',
-            headers: headers
-        });
+            const response = await fetch(`${apiUrl}/aws-credentials/`, {
+                method: 'GET',
+                headers: headers
+            });
+            return {status: response.status, data: await response.json()}
 
-        return {status: response.status, data: await response.json()}
     } catch (error) {
 
         return {status: error.status, data: error.message}
@@ -45,10 +45,10 @@ export const getBuckets = async (credentials) => {
         });
         return {status: response.status, data: await response.json()}
     } catch (error) {
-        return {status:500, error:error}
+        return {status: 500, error: error}
     }
 }
-export const getObjects = async (credentials, bucketName, prefix, nextMarker='', ) => {
+export const getObjects = async (credentials, bucketName, prefix, nextMarker = '',) => {
 
     try {
         const response = await fetch(`${apiUrl}/buckets/${bucketName}/folders?aws_cred=${credentials}&next_marker=${nextMarker}&prefix=${prefix}`, {

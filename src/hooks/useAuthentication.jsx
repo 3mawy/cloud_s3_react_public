@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {useGlobalState} from "../context/GlobalStateContext.jsx";
 import Storage from '../utils/Storage.js'
+import useCredentialsData from "./useCredentialsData.jsx";
 // Helper function to parse JWT tokens
 
 const apiUrl = 'http://localhost:8004/api'
@@ -35,12 +36,8 @@ export const useAuthentication = () => {
             throw new Error('Failed to refresh access token');
         }
     };
-    const handleRequestAuthError = (errorMessage) => {
-        setErrorMessage(errorMessage);
-        signOut()
-        navigate('/auth/signin');
-    };
 
+// const {fetchAWSCredentials} = useCredentialsData()
     const signIn = async (username, password) => {
         try {
             const response = await fetch(`${apiUrl}/login`, {
@@ -59,7 +56,7 @@ export const useAuthentication = () => {
                 Storage.setRefreshToken(refresh)
 
                 // Handle successful sign-in
-                navigate('/');
+                window.location.href = '/';
                 console.log(`success ${data}`)
 
             } else {
@@ -101,45 +98,6 @@ export const useAuthentication = () => {
         navigate('/auth/signin');
     };
 
-    const authenticatedRequest = async (url, options = {}) => {
-        if (!accessToken) {
-            navigate('/auth/signin');
-            return;
-        }
-        const response = await fetch(apiUrl + url, {
-            ...options, headers: {
-                ...options.headers, 'Authorization': `Bearer ${Storage.getAccessToken()}`,
-            },
-        });
-
-        if (response.ok) {
-            return response.json();
-        } else if (response.status === 401) { // Unauthorized status
-            try {
-                const newAccessToken = await refreshAccessToken();
-
-                // Retry the original request with the new access token
-                const retryResponse = await fetch(apiUrl + url, {
-                    ...options, headers: {
-                        ...options.headers, 'Authorization': `Bearer ${newAccessToken}`,
-                    },
-                });
-
-                if (retryResponse.ok) {
-                    return retryResponse.json();
-                } else {
-                    // Handle error in the retried request
-                    handleRequestAuthError(await response.json());
-                }
-            } catch (error) {
-                // Handle error in refreshing access token
-                handleRequestAuthError(error)
-            }
-        } else {
-            // Handle other error cases
-            throw await response.json()
-        }
-    };
     const refreshTokenAndRetry = async (remoteCallback) => {
         if (!Storage.getAccessToken()) {
             navigate('/auth/signin');
@@ -151,13 +109,7 @@ export const useAuthentication = () => {
         } else if (response.status === 401) {
             await refreshAccessToken();
             response = await remoteCallback()
-
-            if (response.status !== 200) {
-                handleRequestAuthError(response.data)
-                return;
-            }
         }
-
         return response;
     };
 
@@ -167,7 +119,6 @@ export const useAuthentication = () => {
         signIn,
         signOut,
         errorMessage,
-        authenticatedRequest,
         isLoggedIn,
         refreshTokenAndRetry
     };

@@ -2,7 +2,7 @@ import {useAuthentication} from "./useAuthentication.jsx";
 import {useGlobalState} from "../context/GlobalStateContext.jsx";
 import {getBuckets} from "../utils/remotes.js";
 
-const useBucketDataLoader = () => {
+const useBucketData = () => {
     const {refreshTokenAndRetry} = useAuthentication();
     const {currentCredentials, setBuckets, setErrorBuckets, setLoadingBuckets} = useGlobalState();
 
@@ -28,4 +28,4 @@ const useBucketDataLoader = () => {
     return {fetchBuckets};
 };
 
-export default useBucketDataLoader;
+export default useBucketData;
