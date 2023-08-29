@@ -5,7 +5,7 @@ import Storage from '../utils/Storage.js'
 import useCredentialsData from "./useCredentialsData.jsx";
 // Helper function to parse JWT tokens
 
-const apiUrl = 'http://localhost:8004/api'
+const apiUrl = 'https://3mawy.com/api'
 export const useAuthentication = () => {
     const [accessToken, setAccessToken] = useState(Storage.getAccessToken());
     const [refreshToken, setRefreshToken] = useState(Storage.getRefreshToken());
