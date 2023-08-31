@@ -1,6 +1,6 @@
 import Storage from "./Storage.js";
 
-const apiUrl = 'http://5.182.18.38:8004/api'
+const apiUrl = 'https://3mawy.com/api'
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${Storage.getAccessToken()}`,
@@ -52,6 +52,20 @@ export const getObjects = async (credentials, bucketName, prefix, nextMarker = '
 
     try {
         const response = await fetch(`${apiUrl}/buckets/${bucketName}/folders?aws_cred=${credentials}&next_marker=${nextMarker}&prefix=${prefix}`, {
+            method: 'GET',
+            headers: headers
+        });
+
+        return {status: response.status, data: await response.json()}
+    } catch (error) {
+
+        return {status: error.status, data: error.message}
+    }
+}
+export const getObjectsMetadata = async (credentials) => {
+
+    try {
+        const response = await fetch(`${apiUrl}/objects/metadata?aws_cred=${credentials}`, {
             method: 'GET',
             headers: headers
         });
