@@ -90,3 +90,29 @@ export const getObjectPresignedUrl = async (credentials, bucketName, objectKey) 
         return {status: error.status, data: error.message}
     }
 }
+export const getObjectStats = async (credentials) => {
+    try {
+        const response = await fetch(`${apiUrl}/objects/metadata?aws_cred=${credentials}`, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        return {status: response.status, data: await response.json()}
+    } catch (error) {
+
+        return {status: error.status, data: error.message}
+    }
+}
+export const getTaskStatus = async (task) => {
+    try {
+        const response = await fetch(`${apiUrl}/check_task_status/${task}`, {
+            method: 'GET',
+            headers: headers,
+        });
+
+        return {status: response.status, data: await response.json()}
+    } catch (error) {
+
+        return {status: error.status, data: error.message}
+    }
+}

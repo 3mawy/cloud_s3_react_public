@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {useAuthentication} from "./useAuthentication.jsx";
 import {useGlobalState} from "../context/GlobalStateContext.jsx";
-import {getObjectPresignedUrl, getObjects} from "../utils/remotes.js";
+import {getObjectPresignedUrl, getObjects, getObjectsMetadata} from "../utils/remotes.js";
 
 const useObjectsData = () => {
     const {refreshTokenAndRetry} = useAuthentication();
@@ -13,7 +13,15 @@ const useObjectsData = () => {
     const [currentPrefix, setCurrentPrefix] = useState('');
     const {currentCredentials, currentBucket} = useGlobalState();
 
-    async function fetchObjectsPaginated(prefix, nextMarker) {
+
+
+    async function fetchObjectsMetadata() {
+
+        return await refreshTokenAndRetry(async () => {
+            return await getObjectsMetadata(currentCredentials);
+        })
+
+    }    async function fetchObjectsPaginated(prefix, nextMarker) {
 
         return await refreshTokenAndRetry(async () => {
             return await getObjects(currentCredentials, currentBucket, prefix, nextMarker);
@@ -66,6 +74,7 @@ const useObjectsData = () => {
             setErrorPresignedUrl(error);
         }
     }
+
 
 
     return {

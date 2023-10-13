@@ -71,7 +71,7 @@ const ObjectsExplorer = ({folders, files, currentPrefix, handlePrefixChange, nex
                         </li>
                     ))}
                 </ul>
-                <ul >
+                <ul>
                     {files?.map((file, index) => (
                         <li key={file.file} onClick={() => handleFileClick(file.file)}
                             className="text-body dark:text-whiten dark:bg-meta-4 bg-bodydark1 rounded my-1 dark:hover:text-white hover:text-white cursor-pointer flex gap-1.5 text-lg place-items-center ">
