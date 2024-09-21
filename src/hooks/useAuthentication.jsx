@@ -4,7 +4,7 @@ import {useGlobalState} from "../context/GlobalStateContext.jsx";
 import Storage from '../utils/Storage.js'
 // Helper function to parse JWT tokens
 
-const apiUrl = 'https://3mawy.com/api'
+const apiUrl = 'https://3mawy2.pythonanywhere.com/api'
 export const useAuthentication = () => {
     const [accessToken, setAccessToken] = useState(Storage.getAccessToken());
     const [refreshToken, setRefreshToken] = useState(Storage.getRefreshToken());

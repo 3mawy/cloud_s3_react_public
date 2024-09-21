@@ -14,7 +14,7 @@ const SigninForm = () => {
         <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
             <span className="mb-1.5 block font-medium">Start for free</span>
             <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In to TailAdmin
+                Sign In to CloudS3
             </h2>
 
             <form onSubmit={handleSubmit}>

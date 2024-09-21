@@ -1,6 +1,6 @@
 import Storage from "./Storage.js";
 
-const apiUrl = 'https://3mawy.com/api'
+const apiUrl = 'https://3mawy2.pythonanywhere.com/api'
 const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${Storage.getAccessToken()}`,
